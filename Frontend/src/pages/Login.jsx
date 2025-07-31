@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/authApi';
+import { useAuth } from '../context/authContext'; // ✅ Import auth context
 import './login.css';
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useAuth(); // ✅ Use context
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,6 +20,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(formData);
+      setIsAuthenticated(true); // ✅ Important
       navigate('/');
     } catch (err) {
       setError('Invalid credentials');
@@ -27,7 +30,6 @@ const Login = () => {
   const togglePassword = () => setShowPassword((prev) => !prev);
 
   return (
-    <div>
     <div className="login-container">
       <h1 className="main-heading">Employee Management System</h1>
       <div className="login-card">
@@ -42,7 +44,6 @@ const Login = () => {
             required
             className="login-input"
           />
-
           <div className="password-wrapper">
             <input
               type={showPassword ? 'text' : 'password'}
@@ -61,16 +62,12 @@ const Login = () => {
               {showPassword ? '🙈' : '👁️'}
             </button>
           </div>
-
           {error && <p className="login-error">{error}</p>}
-
           <button type="submit" className="login-button">Login</button>
         </form>
       </div>
-    </div>
     </div>
   );
 };
 
 export default Login;
-

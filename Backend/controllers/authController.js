@@ -28,8 +28,16 @@ export const login = async (req, res) => {
   }
 };
 
-export const getMe = (req, res) => {
-  const user = req.user; // set by authMiddleware
-  if (!user) return res.status(401).json({ message: 'Unauthorized' });
-  res.json({ user });
+export const getMe = async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.user.id).select('-password');
+    if (!admin) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(admin);
+  } catch (error) {
+    console.error('GetMe error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
+
