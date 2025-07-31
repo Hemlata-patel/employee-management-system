@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // ✅ Base Axios instance with cookie support
 const API = axios.create({
-  baseURL: 'https://employee-management-system-backend-nw0a.onrender.com' // backend URL http://localhost:5000/api'
+  baseURL: 'https://employee-management-system-backend-nw0a.onrender.com/api',
   withCredentials: true, // send cookies
 });
 

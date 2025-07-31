@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const AUTH_API = axios.create({
-  baseURL: 'http://localhost:5000/api/auth',
+  baseURL: 'https://employee-management-system-backend-nw0a.onrender.com/api/auth',
   withCredentials: true,
 });
 
