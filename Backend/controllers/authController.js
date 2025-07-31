@@ -14,7 +14,6 @@ export const login = async (req, res) => {
 
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // ✅ Set token as HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,       // ✅ Required for HTTPS (Render)
@@ -22,8 +21,15 @@ export const login = async (req, res) => {
       maxAge: 60 * 60 * 1000, // 1 hour
     });
 
+
     res.status(200).json({ message: 'Login successful' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+export const getMe = (req, res) => {
+  const user = req.user; // set by authMiddleware
+  if (!user) return res.status(401).json({ message: 'Unauthorized' });
+  res.json({ user });
 };
