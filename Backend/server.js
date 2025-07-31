@@ -35,7 +35,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173','https://employee-management-system-frontend2.onrender.com'] // frontend origin
+  origin: ['http://localhost:5173','https://employee-management-system-frontend2.onrender.com'], // frontend origin
   credentials: true                // allow cookies
 }));
 app.use(express.json());
